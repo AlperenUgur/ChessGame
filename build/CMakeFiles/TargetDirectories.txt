@@ -1,0 +1,3 @@
+/home/alperen/projects/helloworld/ChessGame/build/CMakeFiles/chess.dir
+/home/alperen/projects/helloworld/ChessGame/build/CMakeFiles/edit_cache.dir
+/home/alperen/projects/helloworld/ChessGame/build/CMakeFiles/rebuild_cache.dir
