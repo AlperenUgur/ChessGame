@@ -1,5 +1,8 @@
 #include "member.hpp"
 #include <cmath>
+#include <iostream>
+
+using namespace std;
 
 namespace member_ns
 {
@@ -8,24 +11,25 @@ namespace member_ns
 bool Pawn::move(int fromX, int fromY, int toX, int toY)
 {
 	int direction = (getColor() == Color::WHITE) ? 1 : -1; // White moves up, Black moves down
+	cout << direction << endl;
 
 	// Move forward by one square if the destination square is empty
-	if(toX == fromX && toY == fromY + direction)
+	if(toX == fromX + direction && toY == fromY)
 	{
 		return true;
 	}
 
 	// Initial two-square move if both squares in front are empty
-	if((getColor() == Color::WHITE && fromY == 1) || (getColor() == Color::BLACK && fromY == 6))
+	if((getColor() == Color::WHITE && fromX == 1) || (getColor() == Color::BLACK && fromX == 6))
 	{
-		if(toX == fromX && toY == fromY + 2 * direction)
+		if(toX == fromX + 2 * direction && toY == fromY)
 		{
 			return true;
 		}
 	}
 
 	// Diagonal capture move
-	if((toX == fromX + 1 || toX == fromX - 1) && toY == fromY + direction)
+	if((toY == fromY + 1 || toY == fromY - 1) && toX == fromX + direction)
 	{
 		return true;
 	}
