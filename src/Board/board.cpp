@@ -6,24 +6,25 @@ namespace board_ns
 {
 
 Board::Board()
-	: board(8, std::vector<member_ns::Piece*>(8, nullptr))
+	: board(8, LinkedList<member_ns::Piece*>(8, nullptr))
 {
 	setBoard();
 }
 
 Board::~Board()
 {
-	for(auto& row : board)
+	for(int i = 0; i < board.size(); i++)
 	{
-		for(auto& piece : row)
+		for(int j = 0; j < board[i].size(); j++)
 		{
-			delete piece;
+			delete board[i][j];
 		}
 	}
 }
 
 void Board::setBoard()
 {
+	cout << "setBoard started!" << endl;
 	// Place pawns
 	for(int i = 0; i < 8; i++)
 	{
@@ -83,7 +84,7 @@ bool Board::isMoveValid(member_ns::Piece* piecePtr, int fromX, int fromY, int to
 	return true;
 }
 
-member_ns::Piece* Board::getPiece(int x, int y) const
+member_ns::Piece* Board::getPiece(int x, int y)
 {
 	if(x >= 0 && x < 8 && y >= 0 && y < 8)
 	{
@@ -97,15 +98,15 @@ void Board::setPiece(int x, int y, member_ns::Piece* piecePtr)
 	board[x][y] = piecePtr;
 }
 
-void Board::printBoard() const
+void Board::printBoard()
 {
-	for(const auto& row : board)
+	for(int i = 0; i < board.size(); i++)
 	{
-		for(const auto& piece : row)
+		for(int j = 0; j < board[i].size(); j++)
 		{
-			if(piece)
+			if(board[i][j])
 			{
-				cout << " " << piece->getSymbol() << "  ";
+				cout << " " << board[i][j]->getSymbol() << "  ";
 			}
 			else
 			{
