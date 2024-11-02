@@ -7,7 +7,9 @@ namespace board_ns
 
 Board::Board()
 	: board(8, std::vector<member_ns::Piece*>(8, nullptr))
-{ }
+{
+	setBoard();
+}
 
 Board::~Board()
 {
@@ -56,6 +58,31 @@ void Board::setBoard()
 	std::cout << "Board setup complete!" << std::endl;
 }
 
+bool Board::isMoveValid(member_ns::Piece* piecePtr, int fromX, int fromY, int toX, int toY, member_ns::Color currentPlayerColor) {
+	if (!piecePtr) {
+		std::cout << "No piece at the starting position" << std::endl;
+		return false;   
+	}
+
+	if (piecePtr->getColor() != currentPlayerColor) {
+		std::cout << "You can only move your own pieces" << std::endl;
+		return false;
+	}
+
+	// check color and piece who has already there
+	member_ns::Piece* targetPiece = getPiece(toX, toY);
+	if (targetPiece && targetPiece->getColor() == currentPlayerColor) {
+		std::cout << "Cannot move to a square occupied by your own piece" << std::endl;
+		return false;
+	}
+	if (!piecePtr->move(fromX, fromY, toX, toY)) {
+		std::cout << "Invalid move for the piece" << std::endl;
+		return false;
+	}
+	std::cout << "Moved piece from (" << fromX << ", " << fromY << ") to (" << toX << ", " << toY << ")" << std::endl;
+	return true;
+}
+
 member_ns::Piece* Board::getPiece(int x, int y) const
 {
 	if(x >= 0 && x < 8 && y >= 0 && y < 8)
@@ -63,6 +90,11 @@ member_ns::Piece* Board::getPiece(int x, int y) const
 		return board[x][y];
 	}
 	return nullptr;
+}
+
+void Board::setPiece(int x, int y, member_ns::Piece* piecePtr)
+{
+	board[x][y] = piecePtr;
 }
 
 void Board::printBoard() const

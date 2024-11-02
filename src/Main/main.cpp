@@ -4,6 +4,6 @@ int main()
 {
 
 	game_ns::Game* game = game_ns::Game::getInstance();
-	game->start();
+	game->play();
 	return 0;
 }
